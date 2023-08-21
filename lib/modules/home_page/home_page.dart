@@ -1,6 +1,7 @@
 import 'package:fast_trivia/modules/home_page/bloc/home_bloc.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
+import 'package:fast_trivia/modules/quizz_page/quiz_page.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,13 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  static const route = "/";
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final PageController _pageController = PageController(initialPage: 0);
   late TabController _tabController;
 
   HomeBloc get homePageBloc => context.read<HomeBloc>();
@@ -72,14 +74,21 @@ class _HomePageState extends State<HomePage>
                               },
                               itemCount: quizzes.length,
                               itemBuilder: (context, index) {
-                                final quizz = quizzes[index];
+                                final quiz = quizzes[index];
 
                                 return ActionRow(
-                                  title: Text(quizz.title),
+                                  title: Text(quiz.title),
                                   subtitle: Text(
-                                    "Questões: ${quizz.questions.length}",
+                                    "Questões: ${quiz.questions.length}",
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.pushNamed(
+                                    context,
+                                    QuizPage.route,
+                                    arguments: QuizPageArguments(
+                                      quizTitle: quiz.title,
+                                      quizSection: quiz,
+                                    ),
+                                  ),
                                 );
                               },
                             );

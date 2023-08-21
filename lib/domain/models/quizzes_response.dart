@@ -1,4 +1,4 @@
-import 'package:fast_trivia/domain/models/quizz_section.dart';
+import 'package:fast_trivia/domain/models/quiz_section.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'quizzes_response.g.dart';
@@ -6,7 +6,7 @@ part 'quizzes_response.g.dart';
 @JsonSerializable()
 class QuizzesResponse {
   @JsonKey(name: "questionarios")
-  final List<QuizzSection> quizzes;
+  final List<QuizSection> quizzes;
   QuizzesResponse({
     required this.quizzes,
   });

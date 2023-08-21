@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'quizz_section.dart';
+part of 'quiz_section.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-QuizzSection _$QuizzSectionFromJson(Map<String, dynamic> json) => QuizzSection(
+QuizSection _$QuizSectionFromJson(Map<String, dynamic> json) => QuizSection(
       id: json['id'] as int,
       title: json['titulo'] as String,
       questions: (json['questoes'] as List<dynamic>)
@@ -14,7 +14,7 @@ QuizzSection _$QuizzSectionFromJson(Map<String, dynamic> json) => QuizzSection(
           .toList(),
     );
 
-Map<String, dynamic> _$QuizzSectionToJson(QuizzSection instance) =>
+Map<String, dynamic> _$QuizSectionToJson(QuizSection instance) =>
     <String, dynamic>{
       'id': instance.id,
       'titulo': instance.title,

@@ -7,11 +7,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final QuizzesRepository _repository;
 
   HomeBloc(this._repository) : super(const HomeState.initial()) {
-    on<HomeEvent>(_onFetchHomeQuizzes);
+    on<HomeEventFetchQuizzes>(_onFetchHomeQuizzes);
   }
 
   void _onFetchHomeQuizzes(
-    HomeEvent event,
+    HomeEventFetchQuizzes event,
     Emitter emit,
   ) async {
     emit(state.loading());

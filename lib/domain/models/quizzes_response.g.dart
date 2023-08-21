@@ -9,7 +9,7 @@ part of 'quizzes_response.dart';
 QuizzesResponse _$QuizzesResponseFromJson(Map<String, dynamic> json) =>
     QuizzesResponse(
       quizzes: (json['questionarios'] as List<dynamic>)
-          .map((e) => QuizzSection.fromJson(e as Map<String, dynamic>))
+          .map((e) => QuizSection.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
