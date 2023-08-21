@@ -7,6 +7,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   QuizBloc() : super(const QuizState.initial()) {
     on<QuizEventCreateUserAnswers>(_onCreateUserAnswers);
     on<QuizEventUpdateUserAnswers>(_onUpdateUserAnswers);
+    on<QuizEventShouldShowSendQuizBtn>(_onShouldShowSentQuizBtn);
   }
 
   void _onCreateUserAnswers(QuizEventCreateUserAnswers event, Emitter emit) {
@@ -33,5 +34,12 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         isQuizDone: true,
       ));
     }
+  }
+
+  void _onShouldShowSentQuizBtn(
+    QuizEventShouldShowSendQuizBtn event,
+    Emitter emit,
+  ) {
+    emit(state.copyWith(isQuizDone: true));
   }
 }

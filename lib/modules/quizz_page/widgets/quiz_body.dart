@@ -1,4 +1,5 @@
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_bloc.dart';
+import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:fast_trivia/modules/quizz_page/widgets/quiz_alternatives.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,22 @@ class QuizBody extends StatefulWidget {
 
 class _QuizBodyState extends State<QuizBody> {
   final controller = PageController(initialPage: 0);
-  QuizBloc get quizPageBloc => context.read<QuizBloc>();
+  QuizBloc get bloc => context.read<QuizBloc>();
+
+  @override
+  void initState() {
+    controller.addListener(() {
+      // print(controller.page?.ceilToDouble());
+      // print(widget.quizSection.questions.length);
+      // print(controller.page?.ceilToDouble() ==
+      // widget.quizSection.questions.length - 1);
+      if (controller.page?.ceilToDouble() ==
+          widget.quizSection.questions.length - 1) {
+        bloc.add(QuizEventShouldShowSendQuizBtn());
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

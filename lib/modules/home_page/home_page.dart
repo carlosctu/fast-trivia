@@ -1,8 +1,7 @@
 import 'package:fast_trivia/modules/home_page/bloc/home_bloc.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
-import 'package:fast_trivia/modules/quizz_page/quiz_page.dart';
-import 'package:fast_trivia/utils/ui/export_widgets.dart';
+import 'package:fast_trivia/modules/home_page/widgets/available_questions_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,11 +27,6 @@ class _HomePageState extends State<HomePage>
       length: 2,
       vsync: this,
     );
-    _tabController.addListener(() {
-      if (_tabController.previousIndex != _tabController.index) {
-        setState(() {});
-      }
-    });
     super.initState();
   }
 
@@ -55,55 +49,7 @@ class _HomePageState extends State<HomePage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  StreamBuilder(
-                      stream: homePageBloc.stream,
-                      builder: (context, snapshot) {
-                        final state = snapshot.data?.status;
-
-                        switch (state) {
-                          case HomeStatus.complete:
-                            final quizzes = snapshot.data!.quizzes;
-
-                            return ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              separatorBuilder: (context, index) {
-                                return Divider(
-                                  height: 1,
-                                  color: Colors.grey[350],
-                                );
-                              },
-                              itemCount: quizzes.length,
-                              itemBuilder: (context, index) {
-                                final quiz = quizzes[index];
-
-                                return ActionRow(
-                                  title: Text(quiz.title),
-                                  subtitle: Text(
-                                    "Questões: ${quiz.questions.length}",
-                                  ),
-                                  onPressed: () => Navigator.pushNamed(
-                                    context,
-                                    QuizPage.route,
-                                    arguments: QuizPageArguments(
-                                      quizTitle: quiz.title,
-                                      quizSection: quiz,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          case HomeStatus.loading:
-                            return const Center(
-                              child: Text("Carregando..."),
-                            );
-                          case HomeStatus.error:
-                            return const Center(
-                              child: Text("Deu erro..."),
-                            );
-                          default:
-                            return Text("Error");
-                        }
-                      }),
+                  const AvailableQuestionsTab(),
                   Container(
                     color: Colors.green,
                     child: Center(

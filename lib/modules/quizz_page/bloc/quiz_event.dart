@@ -15,3 +15,5 @@ class QuizEventCreateUserAnswers extends QuizEvent {
     required this.questionsLength,
   });
 }
+
+class QuizEventShouldShowSendQuizBtn extends QuizEvent {}
