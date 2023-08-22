@@ -12,6 +12,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<QuizEventUpdateUserAnswers>(_onUpdateUserAnswers);
     on<QuizEventShouldShowSendQuizBtn>(_onShouldShowSentQuizBtn);
     on<QuizEventCompleteQuiz>(_onQuizComplete);
+    on<QuizEventSubmitQuiz>(_onQuizSubmitted);
   }
 
   void _onCreateUserAnswers(QuizEventCreateUserAnswers event, Emitter emit) {
@@ -64,7 +65,12 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     final score = (correctAnswers / quizAnswers.length) * 100;
 
     emit(state.copyWith(score: score));
+  }
 
+  void _onQuizSubmitted(
+    QuizEventSubmitQuiz event,
+    Emitter emit,
+  ) {
     _saveQuizzesOnHistoryUseCase.execute(event.quiz.copyWith(
       userAnswers: state.userAnswers,
       score: state.score,

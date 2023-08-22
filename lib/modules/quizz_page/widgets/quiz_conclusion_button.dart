@@ -1,10 +1,10 @@
-import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
-import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
 import 'package:fast_trivia/modules/conclusion_page/conclusion_page.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_bloc.dart';
+import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 
 class QuizConclusionButton extends StatelessWidget {
@@ -36,13 +36,11 @@ class QuizConclusionButton extends StatelessWidget {
             bloc.add(QuizEventCompleteQuiz(
               quizAnswers: quizSection.answers,
               userAnswers: state.userAnswers,
-              quiz: quizSection,
             ));
             showModalBottomSheet(
               context: context,
               builder: (context) => _CompleteQuizBottomSheet(
-                questionLength: quizSection.questions.length,
-                quizAnswers: quizSection.answers,
+                quizSection: quizSection,
               ),
             );
           },
@@ -60,18 +58,17 @@ class QuizConclusionButton extends StatelessWidget {
 }
 
 class _CompleteQuizBottomSheet extends StatelessWidget {
-  final int questionLength;
-  final List<int> quizAnswers;
+  final QuizSectionViewData quizSection;
   const _CompleteQuizBottomSheet({
     Key? key,
-    required this.questionLength,
-    required this.quizAnswers,
+    required this.quizSection,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<QuizBloc>();
     final state = bloc.state;
+    final questionLength = quizSection.questions.length;
     final answeredQuestions =
         state.userAnswers.where((answer) => answer != 0).length;
 
@@ -113,12 +110,15 @@ class _CompleteQuizBottomSheet extends StatelessWidget {
               children: [
                 ButtonContainer(
                   label: Text("Enviar"),
-                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    ConclusionPage.route,
-                    (route) => false,
-                    arguments: ConclusionArguments(score: state.score),
-                  ),
+                  onPressed: () {
+                    bloc.add(QuizEventSubmitQuiz(quiz: quizSection));
+                    return Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      ConclusionPage.route,
+                      (route) => false,
+                      arguments: ConclusionArguments(score: state.score),
+                    );
+                  },
                   isButtonColored: true,
                 ),
                 const SizedBox(width: 4),

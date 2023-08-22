@@ -23,11 +23,16 @@ class QuizEventShouldShowSendQuizBtn extends QuizEvent {}
 class QuizEventCompleteQuiz extends QuizEvent {
   final List<int> quizAnswers;
   final List<int> userAnswers;
-  final QuizSectionViewData quiz;
 
   QuizEventCompleteQuiz({
     required this.quizAnswers,
     required this.userAnswers,
+  });
+}
+
+class QuizEventSubmitQuiz extends QuizEvent {
+  final QuizSectionViewData quiz;
+  QuizEventSubmitQuiz({
     required this.quiz,
   });
 }
