@@ -1,6 +1,7 @@
 import 'package:fast_trivia/modules/home_page/bloc/home_bloc.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
+import 'package:fast_trivia/modules/home_page/widgets/empty_state_widget.dart';
 import 'package:fast_trivia/modules/quizz_page/quiz_page.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 import 'package:flutter/material.dart';
@@ -62,16 +63,23 @@ class _AvailableQuestionsTabState extends State<AvailableQuestionsTab> {
                 );
               },
             );
+          case HomeStatus.empty:
+            return const EmptyStateWidget(
+              title: "Não há questionários",
+              subtitle: "disponíveis no momento ):",
+            );
           case HomeStatus.loading:
             return const Center(
-              child: Text("Carregando..."),
+              child: CircularProgressIndicator(),
             );
           case HomeStatus.error:
             return const Center(
               child: Text("Deu erro..."),
             );
           default:
-            return Text("Error");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
         }
       },
     );

@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage>
             return SafeArea(
               child: TabBarView(
                 controller: _tabController,
+                physics: const NeverScrollableScrollPhysics(),
                 children: const [
                   AvailableQuestionsTab(),
                   HistoryQuestionsTab(),

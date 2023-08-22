@@ -1,7 +1,7 @@
 import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
 import 'package:fast_trivia/domain/repositories/models/history_quiz.dart';
 
-enum HomeStatus { complete, loading, error }
+enum HomeStatus { complete, empty, loading, error }
 
 class HomeState {
   final HomeStatus status;
@@ -18,6 +18,8 @@ class HomeState {
   const HomeState.initial() : this._();
 
   HomeState loading() => copyWith(status: HomeStatus.loading);
+
+  HomeState emptyState() => copyWith(status: HomeStatus.empty);
 
   HomeState validQuizzesState(List<QuizSectionViewData> data) => copyWith(
         status: HomeStatus.complete,

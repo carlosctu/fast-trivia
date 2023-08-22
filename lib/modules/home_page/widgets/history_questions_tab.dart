@@ -1,7 +1,7 @@
 import 'package:fast_trivia/modules/home_page/bloc/home_bloc.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
-import 'package:fast_trivia/modules/quizz_page/quiz_page.dart';
+import 'package:fast_trivia/modules/home_page/widgets/empty_state_widget.dart';
 import 'package:fast_trivia/modules/review_page/review_page.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +63,8 @@ class _HistoryQuestionsTabState extends State<HistoryQuestionsTab> {
                         "${quiz.score.toStringAsFixed(1)}%",
                         style: TextStyle(
                             color: quiz.score >= 50
-                                ? Colors.green[100]
-                                : Colors.red[100]),
+                                ? Colors.green[600]
+                                : Colors.red[600]),
                       )
                     ],
                   ),
@@ -79,16 +79,23 @@ class _HistoryQuestionsTabState extends State<HistoryQuestionsTab> {
                 );
               },
             );
+          case HomeStatus.empty:
+            return const EmptyStateWidget(
+              title: "Não há nenhum questionário",
+              subtitle: "respondido por agora ):",
+            );
           case HomeStatus.loading:
             return const Center(
-              child: Text("Carregando..."),
+              child: CircularProgressIndicator(),
             );
           case HomeStatus.error:
             return const Center(
               child: Text("Deu erro..."),
             );
           default:
-            return Text("Error");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
         }
       },
     );

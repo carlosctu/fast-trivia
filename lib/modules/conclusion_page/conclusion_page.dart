@@ -73,11 +73,15 @@ class _ConclusionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ButtonContainer(
-          onPressed: () {},
-          isButtonColored: true,
-          label: Text("Revisar respostas"),
+        Text(
+          "Suas respostas podem ser visualizadas na aba Historico na home",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
+          ),
         ),
+        const SizedBox(height: 8),
         ButtonContainer(
           onPressed: () => Navigator.pushNamedAndRemoveUntil(
             context,

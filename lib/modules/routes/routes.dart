@@ -11,6 +11,7 @@ Route<dynamic>? onGenerateRoute(settings) {
     );
   } else if (settings.name == QuizPage.route) {
     return MaterialPageRoute(
+      fullscreenDialog: true,
       builder: (BuildContext context) {
         final arguments = settings.arguments as QuizPageArguments;
         return QuizPage(args: arguments);
@@ -25,6 +26,7 @@ Route<dynamic>? onGenerateRoute(settings) {
     );
   } else if (settings.name == ReviewPage.route) {
     return MaterialPageRoute(
+      fullscreenDialog: true,
       builder: (BuildContext context) {
         final arguments = settings.arguments as ReviewPageArguments;
         return ReviewPage(args: arguments);

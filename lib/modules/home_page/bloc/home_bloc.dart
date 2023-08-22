@@ -26,7 +26,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       final result = await _getQuizzesUseCase.execute();
 
-      emit(state.validQuizzesState(result.quizzes));
+      if (result.quizzes.isEmpty) {
+        emit(state.emptyState());
+      } else {
+        emit(state.validQuizzesState(result.quizzes));
+      }
     } on Exception catch (ex) {
       emit(state.invalidState(ex));
     }
@@ -41,7 +45,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       final result = await _getHistoryUseCase.execute();
 
-      emit(state.validHistoryState(result));
+      if (result.isEmpty) {
+        emit(state.emptyState());
+      } else {
+        emit(state.validHistoryState(result));
+      }
     } on Exception catch (ex) {
       emit(state.invalidState(ex));
     }
