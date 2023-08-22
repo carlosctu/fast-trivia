@@ -1,14 +1,20 @@
+import 'package:fast_trivia/domain/use_cases/get_history_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fast_trivia/domain/repositories/quizzes_repository.dart';
+
+import 'package:fast_trivia/domain/use_cases/get_quizzes_use_case.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
-import 'package:fast_trivia/domain/mapper/quizzes_mapper.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final QuizzesRepository _repository;
+  final GetQuizzesUseCase _getQuizzesUseCase;
+  final GetHistoryUseCase _getHistoryUseCase;
 
-  HomeBloc(this._repository) : super(const HomeState.initial()) {
+  HomeBloc(
+    this._getQuizzesUseCase,
+    this._getHistoryUseCase,
+  ) : super(const HomeState.initial()) {
     on<HomeEventFetchQuizzes>(_onFetchHomeQuizzes);
+    on<HomeEventFetchHistoryQuizzes>(_onFetchHistoryQuizzes);
   }
 
   void _onFetchHomeQuizzes(
@@ -18,10 +24,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.loading());
 
     try {
-      final result = await _repository.getQuizzes().then(
-            (value) => value.toViewData(),
-          );
-      emit(state.validState(result.quizzes));
+      final result = await _getQuizzesUseCase.execute();
+
+      emit(state.validQuizzesState(result.quizzes));
+    } on Exception catch (ex) {
+      emit(state.invalidState(ex));
+    }
+  }
+
+  void _onFetchHistoryQuizzes(
+    HomeEventFetchHistoryQuizzes event,
+    Emitter emit,
+  ) async {
+    emit(state.loading());
+
+    try {
+      final result = await _getHistoryUseCase.execute();
+
+      emit(state.validHistoryState(result));
     } on Exception catch (ex) {
       emit(state.invalidState(ex));
     }

@@ -4,7 +4,7 @@ import 'package:fast_trivia/modules/home_page/home_page.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 
 class ConclusionArguments {
-  final String score;
+  final double score;
   ConclusionArguments({
     required this.score,
   });
@@ -49,7 +49,7 @@ class ConclusionPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      "Pontuação: ${args.score}%",
+                      "Pontuação: ${args.score.toStringAsFixed(1)}%",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),

@@ -78,8 +78,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               if (state.isQuizDone)
                 QuizConclusionButton(
-                  questionLength: questions.length,
-                  quizAnswers: widget.args.quizSection.answers,
+                  quizSection: widget.args.quizSection,
                 )
             ],
           );

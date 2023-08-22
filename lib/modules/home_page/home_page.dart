@@ -1,7 +1,7 @@
 import 'package:fast_trivia/modules/home_page/bloc/home_bloc.dart';
-import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
 import 'package:fast_trivia/modules/home_page/widgets/available_questions_tab.dart';
+import 'package:fast_trivia/modules/home_page/widgets/history_questions_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,11 +18,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  HomeBloc get homePageBloc => context.read<HomeBloc>();
-
   @override
   void initState() {
-    homePageBloc.add(HomeEventFetchQuizzes());
     _tabController = TabController(
       length: 2,
       vsync: this,
@@ -48,20 +45,9 @@ class _HomePageState extends State<HomePage>
             return SafeArea(
               child: TabBarView(
                 controller: _tabController,
-                children: [
-                  const AvailableQuestionsTab(),
-                  Container(
-                    color: Colors.green,
-                    child: Center(
-                      child: Text(
-                        'Page ${_tabController.index}',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                children: const [
+                  AvailableQuestionsTab(),
+                  HistoryQuestionsTab(),
                 ],
               ),
             );

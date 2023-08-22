@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class ActionRow extends StatelessWidget {
   final Text title;
-  final Text subtitle;
+  final Text? subtitle;
   final VoidCallback onPressed;
   final Widget? rightContent;
   const ActionRow({
     Key? key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.onPressed,
     this.rightContent,
   }) : super(key: key);
@@ -36,13 +36,14 @@ class ActionRow extends StatelessWidget {
                     child: title,
                   ),
                   const SizedBox(height: 8),
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
+                  if (subtitle != null)
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                      child: subtitle!,
                     ),
-                    child: subtitle,
-                  ),
                 ],
               ),
             ),
@@ -50,7 +51,13 @@ class ActionRow extends StatelessWidget {
               Flexible(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: rightContent!,
+                  child: DefaultTextStyle(
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    ),
+                    child: rightContent!,
+                  ),
                 ),
               ),
             Padding(

@@ -1,3 +1,4 @@
+import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,12 +8,10 @@ import 'package:fast_trivia/modules/quizz_page/bloc/quiz_bloc.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 
 class QuizConclusionButton extends StatelessWidget {
-  final int questionLength;
-  final List<int> quizAnswers;
+  final QuizSectionViewData quizSection;
   const QuizConclusionButton({
     Key? key,
-    required this.questionLength,
-    required this.quizAnswers,
+    required this.quizSection,
   }) : super(key: key);
 
   @override
@@ -35,14 +34,15 @@ class QuizConclusionButton extends StatelessWidget {
         child: TextButton(
           onPressed: () {
             bloc.add(QuizEventCompleteQuiz(
-              quizAnswers: quizAnswers,
+              quizAnswers: quizSection.answers,
               userAnswers: state.userAnswers,
+              quiz: quizSection,
             ));
             showModalBottomSheet(
               context: context,
               builder: (context) => _CompleteQuizBottomSheet(
-                questionLength: questionLength,
-                quizAnswers: quizAnswers,
+                questionLength: quizSection.questions.length,
+                quizAnswers: quizSection.answers,
               ),
             );
           },

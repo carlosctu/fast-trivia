@@ -1,3 +1,5 @@
+import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
+
 abstract class QuizEvent {}
 
 class QuizEventUpdateUserAnswers extends QuizEvent {
@@ -21,8 +23,11 @@ class QuizEventShouldShowSendQuizBtn extends QuizEvent {}
 class QuizEventCompleteQuiz extends QuizEvent {
   final List<int> quizAnswers;
   final List<int> userAnswers;
+  final QuizSectionViewData quiz;
+
   QuizEventCompleteQuiz({
     required this.quizAnswers,
     required this.userAnswers,
+    required this.quiz,
   });
 }

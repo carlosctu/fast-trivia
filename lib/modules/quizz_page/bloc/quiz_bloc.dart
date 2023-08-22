@@ -1,10 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:fast_trivia/domain/use_cases/save_quizzes_on_history_use_case.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_state.dart';
 
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
-  QuizBloc() : super(const QuizState.initial()) {
+  final SaveQuizzesOnHistoryUseCase _saveQuizzesOnHistoryUseCase;
+  QuizBloc(
+    this._saveQuizzesOnHistoryUseCase,
+  ) : super(const QuizState.initial()) {
     on<QuizEventCreateUserAnswers>(_onCreateUserAnswers);
     on<QuizEventUpdateUserAnswers>(_onUpdateUserAnswers);
     on<QuizEventShouldShowSendQuizBtn>(_onShouldShowSentQuizBtn);
@@ -60,6 +63,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
     final score = (correctAnswers / quizAnswers.length) * 100;
 
-    emit(state.copyWith(score: score.toStringAsFixed(1)));
+    emit(state.copyWith(score: score));
+
+    _saveQuizzesOnHistoryUseCase.execute(event.quiz.copyWith(
+      userAnswers: state.userAnswers,
+      score: state.score,
+    ));
   }
 }

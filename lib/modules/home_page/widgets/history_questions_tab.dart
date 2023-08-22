@@ -2,23 +2,24 @@ import 'package:fast_trivia/modules/home_page/bloc/home_bloc.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
 import 'package:fast_trivia/modules/quizz_page/quiz_page.dart';
+import 'package:fast_trivia/modules/review_page/review_page.dart';
 import 'package:fast_trivia/utils/ui/export_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AvailableQuestionsTab extends StatefulWidget {
-  const AvailableQuestionsTab({super.key});
+class HistoryQuestionsTab extends StatefulWidget {
+  const HistoryQuestionsTab({super.key});
 
   @override
-  State<AvailableQuestionsTab> createState() => _AvailableQuestionsTabState();
+  State<HistoryQuestionsTab> createState() => _HistoryQuestionsTabState();
 }
 
-class _AvailableQuestionsTabState extends State<AvailableQuestionsTab> {
+class _HistoryQuestionsTabState extends State<HistoryQuestionsTab> {
   HomeBloc get bloc => context.read<HomeBloc>();
 
   @override
   void initState() {
-    bloc.add(HomeEventFetchQuizzes());
+    bloc.add(HomeEventFetchHistoryQuizzes());
     super.initState();
   }
 
@@ -32,7 +33,7 @@ class _AvailableQuestionsTabState extends State<AvailableQuestionsTab> {
 
         switch (state) {
           case HomeStatus.complete:
-            final quizzes = snapshot.data!.quizzes;
+            final historyQuizzes = snapshot.data!.historyQuizzes;
 
             return ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
@@ -42,19 +43,35 @@ class _AvailableQuestionsTabState extends State<AvailableQuestionsTab> {
                   color: Colors.grey[350],
                 );
               },
-              itemCount: quizzes.length,
+              itemCount: historyQuizzes.length,
               itemBuilder: (context, index) {
-                final quiz = quizzes[index];
+                final quiz = historyQuizzes[index];
 
                 return ActionRow(
                   title: Text(quiz.title),
                   subtitle: Text(
-                    "Questões: ${quiz.questions.length}",
+                    "Perguntas: ${quiz.questions.length}",
+                  ),
+                  rightContent: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Pontuação: ",
+                      ),
+                      Text(
+                        "${quiz.score.toStringAsFixed(1)}%",
+                        style: TextStyle(
+                            color: quiz.score >= 50
+                                ? Colors.green[100]
+                                : Colors.red[100]),
+                      )
+                    ],
                   ),
                   onPressed: () => Navigator.pushNamed(
                     context,
-                    QuizPage.route,
-                    arguments: QuizPageArguments(
+                    ReviewPage.route,
+                    arguments: ReviewPageArguments(
                       quizTitle: quiz.title,
                       quizSection: quiz,
                     ),

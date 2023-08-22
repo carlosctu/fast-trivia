@@ -12,7 +12,7 @@ class Questions {
   @JsonKey(name: "gabarito")
   final int questionAnswer;
   @JsonKey(name: "alternativas")
-  final List<QuestionAlternatives> alternatives;
+  final List<QuestionAlternative> alternatives;
 
   Questions({
     required this.id,
@@ -28,16 +28,16 @@ class Questions {
 }
 
 @JsonSerializable()
-class QuestionAlternatives {
+class QuestionAlternative {
   final int id;
   @JsonKey(name: "titulo")
   final String title;
-  QuestionAlternatives({
+  QuestionAlternative({
     required this.id,
     required this.title,
   });
 
-  factory QuestionAlternatives.fromJson(Map<String, dynamic> json) =>
-      _$QuestionAlternativesFromJson(json);
-  Map<String, dynamic> toJson() => _$QuestionAlternativesToJson(this);
+  factory QuestionAlternative.fromJson(Map<String, dynamic> json) =>
+      _$QuestionAlternativeFromJson(json);
+  Map<String, dynamic> toJson() => _$QuestionAlternativeToJson(this);
 }
