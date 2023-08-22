@@ -1,10 +1,10 @@
-import 'package:fast_trivia/domain/models/quiz_section.dart';
+import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
 
 enum HomeStatus { complete, loading, error }
 
 class HomeState {
   final HomeStatus status;
-  final List<QuizSection> quizzes;
+  final List<QuizSectionViewData> quizzes;
   final Exception? exception;
   const HomeState._({
     this.status = HomeStatus.loading,
@@ -16,7 +16,7 @@ class HomeState {
 
   HomeState loading() => copyWith(status: HomeStatus.loading);
 
-  HomeState validState(List<QuizSection> data) => copyWith(
+  HomeState validState(List<QuizSectionViewData> data) => copyWith(
         status: HomeStatus.complete,
         quizzes: data,
       );
@@ -28,7 +28,7 @@ class HomeState {
 
   HomeState copyWith({
     HomeStatus? status,
-    List<QuizSection>? quizzes,
+    List<QuizSectionViewData>? quizzes,
     Exception? exception,
   }) {
     return HomeState._(

@@ -1,4 +1,4 @@
-import 'package:fast_trivia/domain/models/questions.dart';
+import 'package:fast_trivia/domain/repositories/models/questions.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'quiz_section.g.dart';

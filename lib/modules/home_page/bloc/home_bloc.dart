@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fast_trivia/domain/repositories/quizzes_repository.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_event.dart';
 import 'package:fast_trivia/modules/home_page/bloc/home_state.dart';
+import 'package:fast_trivia/domain/mapper/quizzes_mapper.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final QuizzesRepository _repository;
@@ -17,7 +18,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.loading());
 
     try {
-      final result = await _repository.getQuizzes();
+      final result = await _repository.getQuizzes().then(
+            (value) => value.toViewData(),
+          );
       emit(state.validState(result.quizzes));
     } on Exception catch (ex) {
       emit(state.invalidState(ex));

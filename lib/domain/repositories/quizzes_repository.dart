@@ -1,4 +1,4 @@
-import 'package:fast_trivia/domain/models/quizzes_response.dart';
+import 'package:fast_trivia/domain/repositories/models/quizzes_response.dart';
 
 class QuizzesRepository {
   // In case will use an API, uncomment the line behind and

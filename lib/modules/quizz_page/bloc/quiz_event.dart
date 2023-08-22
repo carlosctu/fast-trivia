@@ -17,3 +17,12 @@ class QuizEventCreateUserAnswers extends QuizEvent {
 }
 
 class QuizEventShouldShowSendQuizBtn extends QuizEvent {}
+
+class QuizEventCompleteQuiz extends QuizEvent {
+  final List<int> quizAnswers;
+  final List<int> userAnswers;
+  QuizEventCompleteQuiz({
+    required this.quizAnswers,
+    required this.userAnswers,
+  });
+}

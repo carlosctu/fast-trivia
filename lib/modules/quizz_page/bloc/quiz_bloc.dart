@@ -8,6 +8,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<QuizEventCreateUserAnswers>(_onCreateUserAnswers);
     on<QuizEventUpdateUserAnswers>(_onUpdateUserAnswers);
     on<QuizEventShouldShowSendQuizBtn>(_onShouldShowSentQuizBtn);
+    on<QuizEventCompleteQuiz>(_onQuizComplete);
   }
 
   void _onCreateUserAnswers(QuizEventCreateUserAnswers event, Emitter emit) {
@@ -41,5 +42,24 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     Emitter emit,
   ) {
     emit(state.copyWith(isQuizDone: true));
+  }
+
+  void _onQuizComplete(
+    QuizEventCompleteQuiz event,
+    Emitter emit,
+  ) {
+    final quizAnswers = event.quizAnswers;
+    final userAnswers = event.userAnswers;
+    int correctAnswers = 0;
+
+    for (var index = 0; index < quizAnswers.length; index++) {
+      if (quizAnswers[index] == userAnswers[index]) {
+        correctAnswers++;
+      }
+    }
+
+    final score = (correctAnswers / quizAnswers.length) * 100;
+
+    emit(state.copyWith(score: score.toStringAsFixed(1)));
   }
 }

@@ -1,12 +1,12 @@
+import 'package:fast_trivia/domain/model/questions_view_data.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_bloc.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:flutter/material.dart';
-import 'package:fast_trivia/domain/models/questions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QuizAlternatives extends StatelessWidget {
   final int questionId;
-  final List<QuestionAlternatives> alternatives;
+  final List<QuestionsAlternativesViewData> alternatives;
   final PageController controller;
   const QuizAlternatives({
     Key? key,

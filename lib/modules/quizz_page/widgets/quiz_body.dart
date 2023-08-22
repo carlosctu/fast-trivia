@@ -1,13 +1,12 @@
+import 'package:fast_trivia/domain/model/quiz_section_view_data.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_bloc.dart';
 import 'package:fast_trivia/modules/quizz_page/bloc/quiz_event.dart';
 import 'package:fast_trivia/modules/quizz_page/widgets/quiz_alternatives.dart';
 import 'package:flutter/material.dart';
-
-import 'package:fast_trivia/domain/models/quiz_section.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QuizBody extends StatefulWidget {
-  final QuizSection quizSection;
+  final QuizSectionViewData quizSection;
   const QuizBody({
     Key? key,
     required this.quizSection,
@@ -24,10 +23,6 @@ class _QuizBodyState extends State<QuizBody> {
   @override
   void initState() {
     controller.addListener(() {
-      // print(controller.page?.ceilToDouble());
-      // print(widget.quizSection.questions.length);
-      // print(controller.page?.ceilToDouble() ==
-      // widget.quizSection.questions.length - 1);
       if (controller.page?.ceilToDouble() ==
           widget.quizSection.questions.length - 1) {
         bloc.add(QuizEventShouldShowSendQuizBtn());
